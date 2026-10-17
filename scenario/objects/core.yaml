@@ -1,1 +1,105 @@
-
+objects:
+- id: component-sentinel
+  className: RuntimeComponent
+  properties:
+    ComponentID: COMP-SENTINEL-01
+    Name: sentinel_core
+    ComponentType: PII stripping and ingress control
+    Purpose: Remove, mask, or filter sensitive fields before downstream processing and logging
+    Deployment: Private secure runtime
+    Status: Active
+- id: component-crypto
+  className: RuntimeComponent
+  properties:
+    ComponentID: COMP-CRYPTO-01
+    Name: cryptographic_validation
+    ComponentType: Session and hardware-backed trust validation
+    Purpose: Verify local session authenticity and trusted execution prerequisites
+    Deployment: Private secure runtime
+    Status: Active
+- id: component-compliance
+  className: RuntimeComponent
+  properties:
+    ComponentID: COMP-COMPLIANCE-01
+    Name: compliance_guard
+    ComponentType: Outbound policy enforcement
+    Purpose: Gate outbound actions and policy-sensitive execution
+    Deployment: Private secure runtime
+    Status: Active
+- id: model-securecoder
+  className: AgentModelVersion
+  properties:
+    ModelID: MODEL-SECURECODER-4.2
+    Name: ZentraX SecureCoder
+    Version: '4.2'
+    Provider: Local private inference
+    Deployment: Air-gap-capable model runtime
+    Status: Active at t0
+- id: agent-observer
+  className: AutonomousAgent
+  properties:
+    AgentID: AGENT-OBSERVER-01
+    Name: Observer Agent
+    Role: Detect failing security tests and collect local evidence
+    RuntimeZone: Isolated engineering enclave
+    Status: Active
+- id: agent-diagnosis
+  className: AutonomousAgent
+  properties:
+    AgentID: AGENT-DIAGNOSIS-01
+    Name: Diagnosis Agent
+    Role: Explain failure cause from local logs and source state
+    RuntimeZone: Isolated engineering enclave
+    Status: Active
+- id: agent-patch
+  className: AutonomousAgent
+  properties:
+    AgentID: AGENT-PATCH-01
+    Name: Patch Agent
+    Role: Generate a minimal source change and rationale
+    RuntimeZone: Isolated engineering enclave
+    Status: Active
+- id: agent-guard
+  className: AutonomousAgent
+  properties:
+    AgentID: AGENT-GUARD-01
+    Name: Security Guard Agent
+    Role: Evaluate the proposed patch against governing guardrails
+    RuntimeZone: Isolated engineering enclave
+    Status: Active
+- id: agent-commit
+  className: AutonomousAgent
+  properties:
+    AgentID: AGENT-COMMIT-01
+    Name: Commit Agent
+    Role: Create an authorized git commit in the isolated worktree
+    RuntimeZone: Isolated engineering enclave
+    Status: Active
+- id: agent-deploy
+  className: AutonomousAgent
+  properties:
+    AgentID: AGENT-DEPLOY-01
+    Name: Deployment Agent
+    Role: Promote the authorized commit into the isolated runtime
+    RuntimeZone: Isolated engineering enclave
+    Status: Active
+- id: worktree-482
+  className: SecureWorktree
+  properties:
+    WorktreeID: WT-SEC-482
+    Repository: zentrax-secure-runtime
+    Branch: auto/fix-secure-log-redaction-482
+    BaseCommit: 9f1a2c7d4e5b0c1180e2fd9d8e45f4dca0b8f210
+    IsolationMode: Ephemeral isolated git worktree
+    NetworkEgress: Disabled
+    Status: Active during repair
+- id: error-482
+  className: ErrorEvent
+  properties:
+    ErrorID: ERR-PII-482
+    DetectedAt: '2026-09-12T18:14:22.100Z'
+    Source: security-regression/SEC-PII-014
+    Severity: High
+    Summary: Exception-path audit logging can emit an unredacted email field before sentinel_core redaction
+    LogDigest: sha256:39f1f7f9545ea0f1e93b3790cba058b05ec23819337743dfab520482d9f10482
+    Status: Confirmed synthetic regression

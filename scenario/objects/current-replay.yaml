@@ -1,0 +1,44 @@
+objects:
+- id: revision-v37
+  className: PolicyRevisionEvent
+  properties:
+    EventID: REV-AUTOCODE-3.7
+    OccurredAt: '2026-09-15T00:00:00Z'
+    ChangeType: Approval-boundary tightening
+    Summary: Changes touching PII-processing code now require explicit human security approval before deployment even when
+      deterministic guardrail checks pass.
+    Status: Effective
+- id: policy-v37
+  className: SecurityPolicyVersion
+  properties:
+    PolicyID: POL-AUTOCODE-3.7
+    Title: Secure Autonomous Code Change Policy
+    Version: '3.7'
+    EffectiveFrom: '2026-09-15T00:00:00Z'
+    RequiresPIIRedaction: true
+    RequiresNoNetworkEgress: true
+    RequiresAllowedPathScope: true
+    RequiresTestsPass: true
+    RequiresCryptoGuardUntouched: true
+    RequiresDependencyLockUnchanged: true
+    RequiresHumanApprovalForPIIPaths: true
+    Status: Current at replay
+- id: decision-replay
+  className: GuardrailDecision
+  properties:
+    DecisionID: GD-482-REPLAY
+    DecidedAt: '2026-09-18T09:30:00Z'
+    Disposition: HOLD_FOR_HUMAN_SECURITY_APPROVAL
+    PolicyID: POL-AUTOCODE-3.7
+    DecisionHash: sha256:192d8ee42707eef301a92bd0d64ab209c53979716ef560c2059a0482f6da3930
+    Summary: The same patch still satisfies technical checks, but current policy requires human approval because the target
+      path processes PII.
+    Status: Current-policy simulation; not an executed deployment
+- id: snapshot-current
+  className: DecisionStateSnapshot
+  properties:
+    SnapshotID: SNAP-CODE-482-CURRENT
+    CapturedForTime: '2026-09-18T09:30:00Z'
+    BoundaryType: Current-policy replay state
+    StateHash: sha256:9c1d6bf142706a8449efc2280138a39aa0f64a450874f3fa5f360482e8ed15d1
+    Summary: Current-policy replay state for PATCH-482; not a rewrite of the historical t0 decision.

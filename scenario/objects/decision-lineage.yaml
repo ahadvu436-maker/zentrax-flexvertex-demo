@@ -1,0 +1,191 @@
+objects:
+- id: run-observer
+  className: AgentRun
+  properties:
+    RunID: RUN-OBS-482
+    StartedAt: '2026-09-12T18:14:22.110Z'
+    CompletedAt: '2026-09-12T18:14:22.140Z'
+    Purpose: Collect the failing security-regression evidence
+    Outcome: Error ERR-PII-482 confirmed
+    Status: Completed
+- id: run-diagnosis
+  className: AgentRun
+  properties:
+    RunID: RUN-DIAG-482
+    StartedAt: '2026-09-12T18:14:22.145Z'
+    CompletedAt: '2026-09-12T18:14:22.220Z'
+    Purpose: Identify the source path and failure mechanism
+    Outcome: Exception-path audit call bypasses redaction helper
+    Status: Completed
+- id: run-patch
+  className: AgentRun
+  properties:
+    RunID: RUN-PATCH-482
+    StartedAt: '2026-09-12T18:14:22.225Z'
+    CompletedAt: '2026-09-12T18:14:22.330Z'
+    Purpose: Generate a minimal fix and regression test
+    Outcome: Patch PATCH-482 proposed
+    Status: Completed
+- id: run-guard
+  className: AgentRun
+  properties:
+    RunID: RUN-GUARD-482
+    StartedAt: '2026-09-12T18:14:22.335Z'
+    CompletedAt: '2026-09-12T18:14:22.395Z'
+    Purpose: Evaluate patch against policy v3.6 before execution
+    Outcome: All required t0 checks passed
+    Status: Completed
+- id: run-commit
+  className: AgentRun
+  properties:
+    RunID: RUN-COMMIT-482
+    StartedAt: '2026-09-12T18:14:22.400Z'
+    CompletedAt: '2026-09-12T18:14:22.450Z'
+    Purpose: Create authorized git commit
+    Outcome: Commit CMT-482 created
+    Status: Completed
+- id: run-deploy
+  className: AgentRun
+  properties:
+    RunID: RUN-DEPLOY-482
+    StartedAt: '2026-09-12T18:14:22.455Z'
+    CompletedAt: '2026-09-12T18:14:22.520Z'
+    Purpose: Deploy authorized commit into isolated runtime
+    Outcome: Deployment DEP-482 healthy
+    Status: Completed
+- id: patch-482
+  className: PatchCandidate
+  properties:
+    PatchID: PATCH-482
+    CreatedAt: '2026-09-12T18:14:22.330Z'
+    TargetPath: src/sentinel_core/request_audit.py
+    DiffDigest: sha256:bb95e7c4f18ce6fb4469b15ee237117ad6c5c43a6a6731d021fd0482a48d77ce
+    ChangeSummary: Route exception-path audit fields through redact_sensitive_fields() and add SEC-PII-014 regression coverage
+    Status: Approved at t0
+- id: rationale-482
+  className: PatchRationale
+  properties:
+    RationaleID: RAT-482
+    CreatedAt: '2026-09-12T18:14:22.330Z'
+    Summary: The smallest corrective change is to enforce the existing sentinel_core redaction helper before the exceptional
+      audit-log branch emits metadata.
+    EvidenceBasis: ERR-PII-482, local source inspection, and Security Policy v3.6
+    Status: Recorded
+- id: policy-v36
+  className: SecurityPolicyVersion
+  properties:
+    PolicyID: POL-AUTOCODE-3.6
+    Title: Secure Autonomous Code Change Policy
+    Version: '3.6'
+    EffectiveFrom: '2026-09-01T00:00:00Z'
+    RequiresPIIRedaction: true
+    RequiresNoNetworkEgress: true
+    RequiresAllowedPathScope: true
+    RequiresTestsPass: true
+    RequiresCryptoGuardUntouched: true
+    RequiresDependencyLockUnchanged: true
+    RequiresHumanApprovalForPIIPaths: false
+    Status: Governing at t0
+- id: check-pii
+  className: GuardrailCheck
+  properties:
+    CheckID: CHK-PII-482
+    CheckedAt: '2026-09-12T18:14:22.390Z'
+    CheckType: PII redaction
+    Result: PASS
+    Detail: Patch adds redaction on the exceptional audit path and introduces no new sensitive logging.
+    Status: Authoritative t0 check
+- id: check-egress
+  className: GuardrailCheck
+  properties:
+    CheckID: CHK-EGRESS-482
+    CheckedAt: '2026-09-12T18:14:22.390Z'
+    CheckType: Network egress
+    Result: PASS
+    Detail: No network calls or outbound destinations were introduced; worktree egress remained disabled.
+    Status: Authoritative t0 check
+- id: check-scope
+  className: GuardrailCheck
+  properties:
+    CheckID: CHK-SCOPE-482
+    CheckedAt: '2026-09-12T18:14:22.390Z'
+    CheckType: Allowed file scope
+    Result: PASS
+    Detail: Changes are limited to sentinel_core request_audit.py and its security regression test.
+    Status: Authoritative t0 check
+- id: check-tests
+  className: GuardrailCheck
+  properties:
+    CheckID: CHK-TESTS-482
+    CheckedAt: '2026-09-12T18:14:22.390Z'
+    CheckType: Security tests
+    Result: PASS
+    Detail: SEC-PII-014 and the local secure-runtime regression suite passed.
+    Status: Authoritative t0 check
+- id: check-crypto
+  className: GuardrailCheck
+  properties:
+    CheckID: CHK-CRYPTO-482
+    CheckedAt: '2026-09-12T18:14:22.390Z'
+    CheckType: Cryptographic guard integrity
+    Result: PASS
+    Detail: Argon2id/session-validation and hardware-backed trust code paths were not modified.
+    Status: Authoritative t0 check
+- id: check-deps
+  className: GuardrailCheck
+  properties:
+    CheckID: CHK-DEPS-482
+    CheckedAt: '2026-09-12T18:14:22.390Z'
+    CheckType: Dependency lock
+    Result: PASS
+    Detail: No dependency or lockfile changes were present.
+    Status: Authoritative t0 check
+- id: decision-t0
+  className: GuardrailDecision
+  properties:
+    DecisionID: GD-482-T0
+    DecidedAt: '2026-09-12T18:14:22.395Z'
+    Disposition: ALLOW_AUTONOMOUS_COMMIT_AND_DEPLOY
+    PolicyID: POL-AUTOCODE-3.6
+    DecisionHash: sha256:287a3ec3df612381ab191102d10f9fc2ec6d4f8a755990e9b7780482d482e736
+    Summary: All policy v3.6 pre-execution checks passed for PATCH-482 inside WT-SEC-482.
+    Status: Executed at t0
+- id: auth-482
+  className: ExecutionAuthorization
+  properties:
+    AuthorizationID: AUTH-CODE-482
+    IssuedAt: '2026-09-12T18:14:22.396Z'
+    ExpiresAt: '2026-09-12T18:14:27.396Z'
+    PolicyID: POL-AUTOCODE-3.6
+    DecisionHash: sha256:287a3ec3df612381ab191102d10f9fc2ec6d4f8a755990e9b7780482d482e736
+    AuthorizedAction: Commit PATCH-482 and deploy the resulting commit to the isolated runtime
+    Status: Consumed before expiry
+- id: commit-482
+  className: GitCommit
+  properties:
+    CommitID: CMT-482
+    CreatedAt: '2026-09-12T18:14:22.450Z'
+    Repository: zentrax-secure-runtime
+    Branch: auto/fix-secure-log-redaction-482
+    CommitHash: a61f6df1e70ae4d2196e2d802ec940b660a2482f
+    ParentHash: 9f1a2c7d4e5b0c1180e2fd9d8e45f4dca0b8f210
+    Author: Commit Agent
+    Status: Immutable synthetic commit record
+- id: deployment-482
+  className: DeploymentState
+  properties:
+    DeploymentID: DEP-482
+    RecordedAt: '2026-09-12T18:14:22.520Z'
+    Environment: Isolated secure runtime
+    CommitHash: a61f6df1e70ae4d2196e2d802ec940b660a2482f
+    State: DEPLOYED_HEALTHY
+    Summary: Patched sentinel_core deployed locally; regression suite remains green and outbound egress remains disabled.
+    Status: Final t0 deployment state
+- id: snapshot-t0
+  className: DecisionStateSnapshot
+  properties:
+    SnapshotID: SNAP-CODE-482-T0
+    CapturedForTime: '2026-09-12T18:14:22.395Z'
+    BoundaryType: Historical pre-execution decision state
+    StateHash: sha256:1f52de1755d71093107aa665c3bb44a96aa9447ce61c0db94f010482a9f62830
+    Summary: Historical decision-state reconstruction for the autonomous code-change authorization at t0.
