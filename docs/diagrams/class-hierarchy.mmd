@@ -1,0 +1,17 @@
+flowchart TD
+  Evidence[Evidence & Context] --> ErrorEvent
+  Evidence --> SecureWorktree
+  Reasoning[Reasoning Lineage] --> AutonomousAgent
+  Reasoning --> AgentRun
+  Reasoning --> AgentModelVersion
+  Reasoning --> PatchCandidate
+  Reasoning --> PatchRationale
+  Authority[Authority Lineage] --> SecurityPolicyVersion
+  Authority --> GuardrailCheck
+  Authority --> GuardrailDecision
+  Authority --> ExecutionAuthorization
+  Execution[Execution Lineage] --> GitCommit
+  Execution --> DeploymentState
+  Temporal[Temporal Boundaries] --> DecisionStateSnapshot
+  Provenance[Document Provenance] --> DocumentEvidence
+  Provenance --> EmbeddingChunk

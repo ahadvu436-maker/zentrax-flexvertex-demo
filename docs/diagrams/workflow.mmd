@@ -1,0 +1,12 @@
+flowchart LR
+  A[Local regression error] --> B[Observer Agent]
+  B --> C[Diagnosis Agent]
+  C --> D[Patch Agent]
+  D --> E[Security Guard Agent]
+  E -->|v3.6 checks PASS| F[Execution authorization]
+  F --> G[Commit Agent]
+  G --> H[Git commit]
+  H --> I[Deployment Agent]
+  I --> J[DEPLOYED_HEALTHY]
+  K[Later policy v3.7] --> L[Replay]
+  L --> M[HOLD_FOR_HUMAN_SECURITY_APPROVAL]

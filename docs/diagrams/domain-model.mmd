@@ -1,0 +1,11 @@
+flowchart LR
+  ErrorEvent -->|rationaleGroundedInError| PatchRationale
+  PatchCandidate -->|patchHasRationale| PatchRationale
+  GuardrailDecision -->|decisionEvaluatesPatch| PatchCandidate
+  GuardrailDecision -->|decisionUnderPolicy| SecurityPolicyVersion
+  GuardrailDecision -->|decisionIncludesCheck| GuardrailCheck
+  GuardrailDecision -->|decisionIssuesAuthorization| ExecutionAuthorization
+  GitCommit -->|commitContainsPatch| PatchCandidate
+  GitCommit -->|commitInWorktree| SecureWorktree
+  DeploymentState -->|deploymentUsesCommit| GitCommit
+  DecisionStateSnapshot -->|snapshotCapturesState| GuardrailDecision

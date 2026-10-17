@@ -1,0 +1,11 @@
+flowchart LR
+  E[ERR-PII-482] --> R[RAT-482]
+  P[PATCH-482] --> R
+  D[GD-482-T0] --> P
+  D --> V36[POL-AUTOCODE-3.6]
+  D --> A[AUTH-CODE-482]
+  C[CMT-482] --> P
+  C --> W[WT-SEC-482]
+  DEP[DEP-482] --> C
+  S[SNAP-CODE-482-T0] --> D
+  S --> V36
