@@ -1,0 +1,17 @@
+Voyage {
+    title "Pre-execution guardrail checks"
+    author "FlexVertex"
+    comment "Show the policy, checks, patch, and authority behind the t0 execution decision"
+    tab "Guardrails"
+    FlexJourney results = new FlexJourney(getSchema())
+    IFlexObject decision = singleQuery("select * from GuardrailDecision where DecisionID = 'GD-482-T0'")
+    FlexJourney policy = journey(decision).connection("decisionUnderPolicy").explore()
+    results.addSegments(policy.getSegments())
+    FlexJourney checks = journey(decision).connection("decisionIncludesCheck").explore()
+    results.addSegments(checks.getSegments())
+    FlexJourney patch = journey(decision).connection("decisionEvaluatesPatch").explore()
+    results.addSegments(patch.getSegments())
+    FlexJourney auth = journey(decision).connection("decisionIssuesAuthorization").explore()
+    results.addSegments(auth.getSegments())
+    return results
+}

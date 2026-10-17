@@ -1,0 +1,17 @@
+Voyage {
+    title "Error to patch rationale"
+    author "FlexVertex"
+    comment "Trace the local failure through diagnosis, patch generation, and recorded rationale"
+    tab "Patch lineage"
+    FlexJourney results = new FlexJourney(getSchema())
+    IFlexObject error = singleQuery("select * from ErrorEvent where ErrorID = 'ERR-PII-482'")
+    FlexJourney diag = journey(error).connection().both().name("runDiagnosedError").explore()
+    results.addSegments(diag.getSegments())
+    IFlexObject patch = singleQuery("select * from PatchCandidate where PatchID = 'PATCH-482'")
+    FlexJourney rationale = journey(patch).connection("patchHasRationale").explore()
+    results.addSegments(rationale.getSegments())
+    IFlexObject rat = singleQuery("select * from PatchRationale where RationaleID = 'RAT-482'")
+    FlexJourney evidence = journey(rat).connection("rationaleGroundedInError").explore()
+    results.addSegments(evidence.getSegments())
+    return results
+}

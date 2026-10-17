@@ -1,0 +1,16 @@
+Voyage {
+    title "t0 versus current policy"
+    author "FlexVertex"
+    comment "Compare the original executed guardrail decision with the later current-policy simulation"
+    tab "Compare"
+    FlexJourney results = new FlexJourney(getSchema())
+    IFlexObject oldDecision = singleQuery("select * from GuardrailDecision where DecisionID = 'GD-482-T0'")
+    FlexJourney oldPolicy = journey(oldDecision).connection("decisionUnderPolicy").explore()
+    results.addSegments(oldPolicy.getSegments())
+    IFlexObject newDecision = singleQuery("select * from GuardrailDecision where DecisionID = 'GD-482-REPLAY'")
+    FlexJourney newPolicy = journey(newDecision).connection("decisionUnderPolicy").explore()
+    results.addSegments(newPolicy.getSegments())
+    FlexJourney patch = journey(newDecision).connection("decisionEvaluatesPatch").explore()
+    results.addSegments(patch.getSegments())
+    return results
+}

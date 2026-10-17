@@ -1,0 +1,14 @@
+Voyage {
+    title "Current policy replay"
+    author "FlexVertex"
+    comment "Show why the same patch receives a different disposition under policy v3.7"
+    tab "Current replay"
+    FlexJourney results = new FlexJourney(getSchema())
+    IFlexObject snapshot = singleQuery("select * from DecisionStateSnapshot where SnapshotID = 'SNAP-CODE-482-CURRENT'")
+    FlexJourney state = journey(snapshot).connection("snapshotCapturesState").explore()
+    results.addSegments(state.getSegments())
+    IFlexObject current = singleQuery("select * from SecurityPolicyVersion where PolicyID = 'POL-AUTOCODE-3.7'")
+    FlexJourney prior = journey(current).connection("policySupersedesPolicy").explore()
+    results.addSegments(prior.getSegments())
+    return results
+}

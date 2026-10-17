@@ -1,0 +1,13 @@
+Voyage {
+    title "Multi-agent run chain"
+    author "FlexVertex"
+    comment "Show the autonomous agents and their recorded runs for the repair episode"
+    tab "Agents"
+    FlexJourney results = new FlexJourney(getSchema())
+    IFlexObject wt = singleQuery("select * from SecureWorktree where WorktreeID = 'WT-SEC-482'")
+    FlexJourney runs = journey(wt).connection().both().name("runOperatedInWorktree").explore()
+    results.addSegments(runs.getSegments())
+    FlexJourney agents = journey(runs).connection().both().name("agentProducedRun").explore()
+    results.addSegments(agents.getSegments())
+    return results
+}

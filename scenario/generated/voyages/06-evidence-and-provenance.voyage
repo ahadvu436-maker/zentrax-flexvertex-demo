@@ -1,0 +1,13 @@
+Voyage {
+    title "Evidence and provenance"
+    author "FlexVertex"
+    comment "Follow the historical guardrail decision into embedded supporting passages and source documents"
+    tab "Evidence"
+    FlexJourney results = new FlexJourney(getSchema())
+    IFlexObject decision = singleQuery("select * from GuardrailDecision where DecisionID = 'GD-482-T0'")
+    FlexJourney chunks = journey(decision).connection().both().name("chunkSupportsEntity").explore()
+    results.addSegments(chunks.getSegments())
+    FlexJourney documents = journey(chunks).connection("chunkBelongsToDocument").explore()
+    results.addSegments(documents.getSegments())
+    return results
+}

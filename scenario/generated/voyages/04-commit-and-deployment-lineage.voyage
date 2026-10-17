@@ -1,0 +1,18 @@
+Voyage {
+    title "Commit and deployment lineage"
+    author "FlexVertex"
+    comment "Trace authorized execution from the patch through git commit to final deployment state"
+    tab "Execution lineage"
+    FlexJourney results = new FlexJourney(getSchema())
+    IFlexObject commit = singleQuery("select * from GitCommit where CommitID = 'CMT-482'")
+    FlexJourney patch = journey(commit).connection("commitContainsPatch").explore()
+    results.addSegments(patch.getSegments())
+    FlexJourney wt = journey(commit).connection("commitInWorktree").explore()
+    results.addSegments(wt.getSegments())
+    IFlexObject dep = singleQuery("select * from DeploymentState where DeploymentID = 'DEP-482'")
+    FlexJourney c = journey(dep).connection("deploymentUsesCommit").explore()
+    results.addSegments(c.getSegments())
+    FlexJourney target = journey(dep).connection("deploymentTargetsComponent").explore()
+    results.addSegments(target.getSegments())
+    return results
+}

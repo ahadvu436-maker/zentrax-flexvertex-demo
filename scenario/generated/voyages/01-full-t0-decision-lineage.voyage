@@ -1,0 +1,16 @@
+Voyage {
+    title "Full t0 decision lineage"
+    author "FlexVertex"
+    comment "Reconstruct the historical autonomous code-change authorization boundary"
+    tab "t0 lineage"
+    FlexJourney results = new FlexJourney(getSchema())
+    IFlexObject snapshot = singleQuery("select * from DecisionStateSnapshot where SnapshotID = 'SNAP-CODE-482-T0'")
+    FlexJourney state = journey(snapshot).connection("snapshotCapturesState").explore()
+    results.addSegments(state.getSegments())
+    IFlexObject decision = singleQuery("select * from GuardrailDecision where DecisionID = 'GD-482-T0'")
+    FlexJourney checks = journey(decision).connection("decisionIncludesCheck").explore()
+    results.addSegments(checks.getSegments())
+    FlexJourney auth = journey(decision).connection("decisionIssuesAuthorization").explore()
+    results.addSegments(auth.getSegments())
+    return results
+}
