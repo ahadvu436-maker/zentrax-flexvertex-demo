@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+zentrax:
+  environment: production
+  mode: demo
+  vertex:
+    enabled: true
+    routing: hybrid
