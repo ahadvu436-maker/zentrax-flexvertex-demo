@@ -1,0 +1,395 @@
+relationships:
+- from: component-sentinel
+  to: component-crypto
+  connectionClass: componentFeedsComponent
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    FlowRole: Redacted request enters cryptographic validation
+    Authoritative: true
+- from: component-crypto
+  to: component-compliance
+  connectionClass: componentFeedsComponent
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    FlowRole: Validated request enters outbound policy enforcement
+    Authoritative: true
+- from: agent-observer
+  to: run-observer
+  connectionClass: agentProducedRun
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    AgentRole: Observation
+    Authoritative: true
+- from: agent-diagnosis
+  to: run-diagnosis
+  connectionClass: agentProducedRun
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    AgentRole: Diagnosis
+    Authoritative: true
+- from: agent-patch
+  to: run-patch
+  connectionClass: agentProducedRun
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    AgentRole: Patch generation
+    Authoritative: true
+- from: agent-guard
+  to: run-guard
+  connectionClass: agentProducedRun
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    AgentRole: Security gate
+    Authoritative: true
+- from: agent-commit
+  to: run-commit
+  connectionClass: agentProducedRun
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    AgentRole: Commit execution
+    Authoritative: true
+- from: agent-deploy
+  to: run-deploy
+  connectionClass: agentProducedRun
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    AgentRole: Deployment execution
+    Authoritative: true
+- from: run-observer
+  to: model-securecoder
+  connectionClass: runUsedModel
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    ModelRole: Local reasoning model
+    Authoritative: true
+- from: run-diagnosis
+  to: model-securecoder
+  connectionClass: runUsedModel
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    ModelRole: Local reasoning model
+    Authoritative: true
+- from: run-patch
+  to: model-securecoder
+  connectionClass: runUsedModel
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    ModelRole: Local reasoning model
+    Authoritative: true
+- from: run-observer
+  to: worktree-482
+  connectionClass: runOperatedInWorktree
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Purpose: Isolated autonomous repair episode
+    Authoritative: true
+- from: run-diagnosis
+  to: worktree-482
+  connectionClass: runOperatedInWorktree
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Purpose: Isolated autonomous repair episode
+    Authoritative: true
+- from: run-patch
+  to: worktree-482
+  connectionClass: runOperatedInWorktree
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Purpose: Isolated autonomous repair episode
+    Authoritative: true
+- from: run-guard
+  to: worktree-482
+  connectionClass: runOperatedInWorktree
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Purpose: Isolated autonomous repair episode
+    Authoritative: true
+- from: run-commit
+  to: worktree-482
+  connectionClass: runOperatedInWorktree
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Purpose: Isolated autonomous repair episode
+    Authoritative: true
+- from: run-deploy
+  to: worktree-482
+  connectionClass: runOperatedInWorktree
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Purpose: Isolated autonomous repair episode
+    Authoritative: true
+- from: run-observer
+  to: error-482
+  connectionClass: runObservedError
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    EvidenceRole: Detected regression
+    Authoritative: true
+- from: run-diagnosis
+  to: error-482
+  connectionClass: runDiagnosedError
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    DiagnosisRole: Root-cause target
+    Authoritative: true
+- from: run-patch
+  to: patch-482
+  connectionClass: runProposedPatch
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    ProposalRole: Generated minimal fix
+    Authoritative: true
+- from: patch-482
+  to: rationale-482
+  connectionClass: patchHasRationale
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    RationaleRole: Recorded model rationale
+    Authoritative: true
+- from: rationale-482
+  to: error-482
+  connectionClass: rationaleGroundedInError
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    EvidenceRole: Primary failure evidence
+    Authoritative: true
+- from: run-guard
+  to: patch-482
+  connectionClass: guardRunEvaluatedPatch
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    EvaluationRole: Pre-execution security evaluation
+    Authoritative: true
+- from: decision-t0
+  to: patch-482
+  connectionClass: decisionEvaluatesPatch
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    DecisionRole: t0 patch authorization
+    Authoritative: true
+- from: decision-t0
+  to: policy-v36
+  connectionClass: decisionUnderPolicy
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    ApplicableAtDecision: true
+    Authoritative: true
+- from: decision-t0
+  to: check-pii
+  connectionClass: decisionIncludesCheck
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Required: true
+    Authoritative: true
+- from: check-pii
+  to: patch-482
+  connectionClass: checkEvaluatesPatch
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Scope: PATCH-482 pre-execution evaluation
+    Authoritative: true
+- from: decision-t0
+  to: check-egress
+  connectionClass: decisionIncludesCheck
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Required: true
+    Authoritative: true
+- from: check-egress
+  to: patch-482
+  connectionClass: checkEvaluatesPatch
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Scope: PATCH-482 pre-execution evaluation
+    Authoritative: true
+- from: decision-t0
+  to: check-scope
+  connectionClass: decisionIncludesCheck
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Required: true
+    Authoritative: true
+- from: check-scope
+  to: patch-482
+  connectionClass: checkEvaluatesPatch
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Scope: PATCH-482 pre-execution evaluation
+    Authoritative: true
+- from: decision-t0
+  to: check-tests
+  connectionClass: decisionIncludesCheck
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Required: true
+    Authoritative: true
+- from: check-tests
+  to: patch-482
+  connectionClass: checkEvaluatesPatch
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Scope: PATCH-482 pre-execution evaluation
+    Authoritative: true
+- from: decision-t0
+  to: check-crypto
+  connectionClass: decisionIncludesCheck
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Required: true
+    Authoritative: true
+- from: check-crypto
+  to: patch-482
+  connectionClass: checkEvaluatesPatch
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Scope: PATCH-482 pre-execution evaluation
+    Authoritative: true
+- from: decision-t0
+  to: check-deps
+  connectionClass: decisionIncludesCheck
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Required: true
+    Authoritative: true
+- from: check-deps
+  to: patch-482
+  connectionClass: checkEvaluatesPatch
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Scope: PATCH-482 pre-execution evaluation
+    Authoritative: true
+- from: decision-t0
+  to: auth-482
+  connectionClass: decisionIssuesAuthorization
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Authority: Autonomous commit and isolated deployment
+    Authoritative: true
+- from: run-commit
+  to: auth-482
+  connectionClass: commitRunUsedAuthorization
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    AuthorityValid: true
+    Authoritative: true
+- from: run-commit
+  to: commit-482
+  connectionClass: runCreatedCommit
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Automated: true
+    Authoritative: true
+- from: commit-482
+  to: patch-482
+  connectionClass: commitContainsPatch
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    DiffDigestVerified: true
+    Authoritative: true
+- from: commit-482
+  to: worktree-482
+  connectionClass: commitInWorktree
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    IsolationPreserved: true
+    Authoritative: true
+- from: run-deploy
+  to: auth-482
+  connectionClass: deployRunUsedAuthorization
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    AuthorityValid: true
+    Authoritative: true
+- from: run-deploy
+  to: deployment-482
+  connectionClass: runCreatedDeployment
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    Automated: true
+    Authoritative: true
+- from: deployment-482
+  to: commit-482
+  connectionClass: deploymentUsesCommit
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    CommitHashVerified: true
+    Authoritative: true
+- from: deployment-482
+  to: component-sentinel
+  connectionClass: deploymentTargetsComponent
+  properties:
+    RelationshipEstablishedAt: '2026-09-12T18:14:23.000Z'
+    DeploymentRole: Patched component
+    Authoritative: true
+- from: snapshot-t0
+  to: worktree-482
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Secure worktree
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: WT-SEC-482 isolated with network egress disabled
+- from: snapshot-t0
+  to: error-482
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Observed error
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: ERR-PII-482 confirmed
+- from: snapshot-t0
+  to: model-securecoder
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Model version
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: ZentraX SecureCoder 4.2 local model
+- from: snapshot-t0
+  to: patch-482
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Patch
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: PATCH-482 minimal sentinel_core fix
+- from: snapshot-t0
+  to: rationale-482
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Rationale
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: Patch rationale grounded in local error evidence
+- from: snapshot-t0
+  to: policy-v36
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Governing policy
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: Secure Autonomous Code Change Policy v3.6
+- from: snapshot-t0
+  to: decision-t0
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Guardrail decision
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: ALLOW_AUTONOMOUS_COMMIT_AND_DEPLOY
+- from: snapshot-t0
+  to: auth-482
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Execution authorization
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: AUTH-CODE-482 valid for commit and isolated deployment

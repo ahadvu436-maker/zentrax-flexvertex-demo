@@ -1,1 +1,66 @@
-
+relationships:
+- from: policy-v37
+  to: policy-v36
+  connectionClass: policySupersedesPolicy
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    SupersededAt: '2026-09-15T00:00:00Z'
+    Reason: PII-path deployment now requires human security approval
+    Authoritative: true
+- from: revision-v37
+  to: policy-v37
+  connectionClass: revisionIntroducedPolicy
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    EffectiveAt: '2026-09-15T00:00:00Z'
+    Authoritative: true
+- from: decision-replay
+  to: patch-482
+  connectionClass: decisionEvaluatesPatch
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    DecisionRole: Current-policy replay
+    Authoritative: true
+- from: decision-replay
+  to: policy-v37
+  connectionClass: decisionUnderPolicy
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    ApplicableAtDecision: true
+    Authoritative: true
+- from: snapshot-current
+  to: patch-482
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Patch under replay
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: Same PATCH-482 evaluated under current policy
+- from: snapshot-current
+  to: policy-v37
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Current policy
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: Secure Autonomous Code Change Policy v3.7
+- from: snapshot-current
+  to: decision-replay
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Replay decision
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: HOLD_FOR_HUMAN_SECURITY_APPROVAL
+- from: snapshot-current
+  to: revision-v37
+  connectionClass: snapshotCapturesState
+  properties:
+    RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+    StateRole: Policy change
+    ApplicableAtSnapshot: true
+    Authoritative: true
+    StateSummary: New human approval boundary for PII-processing code
