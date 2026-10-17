@@ -1,0 +1,13 @@
+embedding:
+  enabled: true
+  extractionProvider: PDF
+  providerName: Sentinel
+  chunkClass: EmbeddingChunk
+  indexName: EmbeddingChunkHybrid
+  modelPath: /models/embedding/bge-small-en-v1.5-ONNX-fp16/onnx/model_fp16.onnx
+  tokenizerPath: /models/embedding/bge-small-en-v1.5-ONNX-fp16/tokenizer.json
+  configPath: /models/embedding/bge-small-en-v1.5-ONNX-fp16/config.json
+  detectorPath: /models/embedding/bge-small-en-v1.5-ONNX-fp16/en-sent.bin
+  maxTokens: 300
+  vectorDimensions: 384
+  chunkDocumentConnectionClass: chunkBelongsToDocument

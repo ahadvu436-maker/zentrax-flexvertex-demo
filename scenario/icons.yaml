@@ -1,0 +1,57 @@
+icons:
+  assetFolder: AutonomousCodeChangeLineage/Images
+  assignments:
+  - className: RuntimeComponent
+    path: scenario/icons/RuntimeComponent.png
+    assetName: RuntimeComponent.png
+  - className: AutonomousAgent
+    path: scenario/icons/AutonomousAgent.png
+    assetName: AutonomousAgent.png
+  - className: AgentModelVersion
+    path: scenario/icons/AgentModelVersion.png
+    assetName: AgentModelVersion.png
+  - className: AgentRun
+    path: scenario/icons/AgentRun.png
+    assetName: AgentRun.png
+  - className: SecureWorktree
+    path: scenario/icons/SecureWorktree.png
+    assetName: SecureWorktree.png
+  - className: ErrorEvent
+    path: scenario/icons/ErrorEvent.png
+    assetName: ErrorEvent.png
+  - className: PatchCandidate
+    path: scenario/icons/PatchCandidate.png
+    assetName: PatchCandidate.png
+  - className: PatchRationale
+    path: scenario/icons/PatchRationale.png
+    assetName: PatchRationale.png
+  - className: SecurityPolicyVersion
+    path: scenario/icons/SecurityPolicyVersion.png
+    assetName: SecurityPolicyVersion.png
+  - className: GuardrailCheck
+    path: scenario/icons/GuardrailCheck.png
+    assetName: GuardrailCheck.png
+  - className: GuardrailDecision
+    path: scenario/icons/GuardrailDecision.png
+    assetName: GuardrailDecision.png
+  - className: ExecutionAuthorization
+    path: scenario/icons/ExecutionAuthorization.png
+    assetName: ExecutionAuthorization.png
+  - className: GitCommit
+    path: scenario/icons/GitCommit.png
+    assetName: GitCommit.png
+  - className: DeploymentState
+    path: scenario/icons/DeploymentState.png
+    assetName: DeploymentState.png
+  - className: DecisionStateSnapshot
+    path: scenario/icons/DecisionStateSnapshot.png
+    assetName: DecisionStateSnapshot.png
+  - className: PolicyRevisionEvent
+    path: scenario/icons/PolicyRevisionEvent.png
+    assetName: PolicyRevisionEvent.png
+  - className: DocumentEvidence
+    path: scenario/icons/DocumentEvidence.png
+    assetName: DocumentEvidence.png
+  - className: EmbeddingChunk
+    path: scenario/icons/EmbeddingChunk.png
+    assetName: EmbeddingChunk.png

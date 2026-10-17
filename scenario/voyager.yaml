@@ -1,0 +1,86 @@
+voyagerScripts:
+- path: scenario/generated/voyages/01-full-t0-decision-lineage.voyage
+  title: Full t0 decision lineage
+  description: Full t0 decision lineage
+  content: "Voyage {\n    title \"Full t0 decision lineage\"\n    author \"FlexVertex\"\n    comment \"Reconstruct the historical\
+    \ autonomous code-change authorization boundary\"\n    tab \"t0 lineage\"\n    FlexJourney results = new FlexJourney(getSchema())\n\
+    \    IFlexObject snapshot = singleQuery(\"select * from DecisionStateSnapshot where SnapshotID = 'SNAP-CODE-482-T0'\"\
+    )\n    FlexJourney state = journey(snapshot).connection(\"snapshotCapturesState\").explore()\n    results.addSegments(state.getSegments())\n\
+    \    IFlexObject decision = singleQuery(\"select * from GuardrailDecision where DecisionID = 'GD-482-T0'\")\n    FlexJourney\
+    \ checks = journey(decision).connection(\"decisionIncludesCheck\").explore()\n    results.addSegments(checks.getSegments())\n\
+    \    FlexJourney auth = journey(decision).connection(\"decisionIssuesAuthorization\").explore()\n    results.addSegments(auth.getSegments())\n\
+    \    return results\n}"
+- path: scenario/generated/voyages/02-error-to-patch-rationale.voyage
+  title: Error to patch rationale
+  description: Error to patch rationale
+  content: "Voyage {\n    title \"Error to patch rationale\"\n    author \"FlexVertex\"\n    comment \"Trace the local failure\
+    \ through diagnosis, patch generation, and recorded rationale\"\n    tab \"Patch lineage\"\n    FlexJourney results =\
+    \ new FlexJourney(getSchema())\n    IFlexObject error = singleQuery(\"select * from ErrorEvent where ErrorID = 'ERR-PII-482'\"\
+    )\n    FlexJourney diag = journey(error).connection().both().name(\"runDiagnosedError\").explore()\n    results.addSegments(diag.getSegments())\n\
+    \    IFlexObject patch = singleQuery(\"select * from PatchCandidate where PatchID = 'PATCH-482'\")\n    FlexJourney rationale\
+    \ = journey(patch).connection(\"patchHasRationale\").explore()\n    results.addSegments(rationale.getSegments())\n   \
+    \ IFlexObject rat = singleQuery(\"select * from PatchRationale where RationaleID = 'RAT-482'\")\n    FlexJourney evidence\
+    \ = journey(rat).connection(\"rationaleGroundedInError\").explore()\n    results.addSegments(evidence.getSegments())\n\
+    \    return results\n}"
+- path: scenario/generated/voyages/03-pre-execution-guardrail-checks.voyage
+  title: Pre execution guardrail checks
+  description: Pre execution guardrail checks
+  content: "Voyage {\n    title \"Pre-execution guardrail checks\"\n    author \"FlexVertex\"\n    comment \"Show the policy,\
+    \ checks, patch, and authority behind the t0 execution decision\"\n    tab \"Guardrails\"\n    FlexJourney results = new\
+    \ FlexJourney(getSchema())\n    IFlexObject decision = singleQuery(\"select * from GuardrailDecision where DecisionID\
+    \ = 'GD-482-T0'\")\n    FlexJourney policy = journey(decision).connection(\"decisionUnderPolicy\").explore()\n    results.addSegments(policy.getSegments())\n\
+    \    FlexJourney checks = journey(decision).connection(\"decisionIncludesCheck\").explore()\n    results.addSegments(checks.getSegments())\n\
+    \    FlexJourney patch = journey(decision).connection(\"decisionEvaluatesPatch\").explore()\n    results.addSegments(patch.getSegments())\n\
+    \    FlexJourney auth = journey(decision).connection(\"decisionIssuesAuthorization\").explore()\n    results.addSegments(auth.getSegments())\n\
+    \    return results\n}"
+- path: scenario/generated/voyages/04-commit-and-deployment-lineage.voyage
+  title: Commit and deployment lineage
+  description: Commit and deployment lineage
+  content: "Voyage {\n    title \"Commit and deployment lineage\"\n    author \"FlexVertex\"\n    comment \"Trace authorized\
+    \ execution from the patch through git commit to final deployment state\"\n    tab \"Execution lineage\"\n    FlexJourney\
+    \ results = new FlexJourney(getSchema())\n    IFlexObject commit = singleQuery(\"select * from GitCommit where CommitID\
+    \ = 'CMT-482'\")\n    FlexJourney patch = journey(commit).connection(\"commitContainsPatch\").explore()\n    results.addSegments(patch.getSegments())\n\
+    \    FlexJourney wt = journey(commit).connection(\"commitInWorktree\").explore()\n    results.addSegments(wt.getSegments())\n\
+    \    IFlexObject dep = singleQuery(\"select * from DeploymentState where DeploymentID = 'DEP-482'\")\n    FlexJourney\
+    \ c = journey(dep).connection(\"deploymentUsesCommit\").explore()\n    results.addSegments(c.getSegments())\n    FlexJourney\
+    \ target = journey(dep).connection(\"deploymentTargetsComponent\").explore()\n    results.addSegments(target.getSegments())\n\
+    \    return results\n}"
+- path: scenario/generated/voyages/05-multi-agent-run-chain.voyage
+  title: Multi agent run chain
+  description: Multi agent run chain
+  content: "Voyage {\n    title \"Multi-agent run chain\"\n    author \"FlexVertex\"\n    comment \"Show the autonomous agents\
+    \ and their recorded runs for the repair episode\"\n    tab \"Agents\"\n    FlexJourney results = new FlexJourney(getSchema())\n\
+    \    IFlexObject wt = singleQuery(\"select * from SecureWorktree where WorktreeID = 'WT-SEC-482'\")\n    FlexJourney runs\
+    \ = journey(wt).connection().both().name(\"runOperatedInWorktree\").explore()\n    results.addSegments(runs.getSegments())\n\
+    \    FlexJourney agents = journey(runs).connection().both().name(\"agentProducedRun\").explore()\n    results.addSegments(agents.getSegments())\n\
+    \    return results\n}"
+- path: scenario/generated/voyages/06-evidence-and-provenance.voyage
+  title: Evidence and provenance
+  description: Evidence and provenance
+  content: "Voyage {\n    title \"Evidence and provenance\"\n    author \"FlexVertex\"\n    comment \"Follow the historical\
+    \ guardrail decision into embedded supporting passages and source documents\"\n    tab \"Evidence\"\n    FlexJourney results\
+    \ = new FlexJourney(getSchema())\n    IFlexObject decision = singleQuery(\"select * from GuardrailDecision where DecisionID\
+    \ = 'GD-482-T0'\")\n    FlexJourney chunks = journey(decision).connection().both().name(\"chunkSupportsEntity\").explore()\n\
+    \    results.addSegments(chunks.getSegments())\n    FlexJourney documents = journey(chunks).connection(\"chunkBelongsToDocument\"\
+    ).explore()\n    results.addSegments(documents.getSegments())\n    return results\n}"
+- path: scenario/generated/voyages/07-current-policy-replay.voyage
+  title: Current policy replay
+  description: Current policy replay
+  content: "Voyage {\n    title \"Current policy replay\"\n    author \"FlexVertex\"\n    comment \"Show why the same patch\
+    \ receives a different disposition under policy v3.7\"\n    tab \"Current replay\"\n    FlexJourney results = new FlexJourney(getSchema())\n\
+    \    IFlexObject snapshot = singleQuery(\"select * from DecisionStateSnapshot where SnapshotID = 'SNAP-CODE-482-CURRENT'\"\
+    )\n    FlexJourney state = journey(snapshot).connection(\"snapshotCapturesState\").explore()\n    results.addSegments(state.getSegments())\n\
+    \    IFlexObject current = singleQuery(\"select * from SecurityPolicyVersion where PolicyID = 'POL-AUTOCODE-3.7'\")\n\
+    \    FlexJourney prior = journey(current).connection(\"policySupersedesPolicy\").explore()\n    results.addSegments(prior.getSegments())\n\
+    \    return results\n}"
+- path: scenario/generated/voyages/08-t0-versus-current-policy.voyage
+  title: T0 versus current policy
+  description: T0 versus current policy
+  content: "Voyage {\n    title \"t0 versus current policy\"\n    author \"FlexVertex\"\n    comment \"Compare the original\
+    \ executed guardrail decision with the later current-policy simulation\"\n    tab \"Compare\"\n    FlexJourney results\
+    \ = new FlexJourney(getSchema())\n    IFlexObject oldDecision = singleQuery(\"select * from GuardrailDecision where DecisionID\
+    \ = 'GD-482-T0'\")\n    FlexJourney oldPolicy = journey(oldDecision).connection(\"decisionUnderPolicy\").explore()\n \
+    \   results.addSegments(oldPolicy.getSegments())\n    IFlexObject newDecision = singleQuery(\"select * from GuardrailDecision\
+    \ where DecisionID = 'GD-482-REPLAY'\")\n    FlexJourney newPolicy = journey(newDecision).connection(\"decisionUnderPolicy\"\
+    ).explore()\n    results.addSegments(newPolicy.getSegments())\n    FlexJourney patch = journey(newDecision).connection(\"\
+    decisionEvaluatesPatch\").explore()\n    results.addSegments(patch.getSegments())\n    return results\n}"

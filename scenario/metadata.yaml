@@ -1,0 +1,32 @@
+factory:
+  name: ZentraX Autonomous Code Change Decision Lineage
+  description: A secure autonomous software-engineering demonstration that preserves immutable lineage from an observed error
+    through diagnosis, patch rationale, pre-execution security guardrails, git commit, deployment state, and a later policy
+    replay.
+  graphConstruction:
+    demoMode: The sample seeds a deterministic multi-agent code-repair episode inside an isolated worktree plus a later policy
+      version and replay decision so historical lineage can be inspected without external systems.
+    realWorldMode:
+    - Operational error and test evidence can be ingested from local build, test, and runtime systems.
+    - Agent runs, model versions, patch artifacts, guardrail checks, commit hashes, and deployment receipts can be represented
+      as first-class graph objects.
+    - The graph can remain inside a customer-controlled or air-gapped environment while preserving source and decision provenance.
+    - Later policy or security changes are appended as new state rather than rewritten backward into the original autonomous
+      action.
+    stdoutNotes:
+    - All repository, error, patch, agent, model, policy, commit, and deployment records in this project are synthetic.
+    - The scenario is inspired by a ZentraX AI secure-runtime architecture and models decision lineage rather than implementing
+      ZentraX runtime controls.
+    - The historical decision boundary is 2026-09-12T18:14:22.395Z; the later policy replay is 2026-09-18T09:30:00Z.
+    generatedNotesPath: scenario/generated/SCENARIO-NOTES.md
+flexvertex:
+  host: localhost
+  port: 10000
+  adminPath: /System/System/System/Admin
+  adminPassword: Admin
+  domain: FlexVertexZentraXDemo
+  nexus: AutonomousSoftwareEngineering
+  schema: SecureCodeChangeLineage
+  user: DecisionLineageExplorer
+  userPassword: abc123
+  recreateDomain: true

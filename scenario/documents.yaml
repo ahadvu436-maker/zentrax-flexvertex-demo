@@ -1,0 +1,321 @@
+documents:
+- id: doc-error
+  path: scenario/generated/documents/error-investigation-err-482.pdf
+  title: Error Investigation Record ERR-PII-482
+  documentType: Security Regression Evidence
+  section: Observed failure
+  paragraphs:
+  - Security regression SEC-PII-014 detected that an exception-path audit call could emit an unredacted email field before
+    sentinel_core redaction.
+  - The failure was captured inside secure worktree WT-SEC-482 with network egress disabled and no real user PII retained.
+  objectId: document-error
+  className: DocumentEvidence
+  properties:
+    IssuedAt: '2026-09-12T18:14:22.100Z'
+    Status: Authoritative synthetic local error evidence
+  links:
+  - to: error-482
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Error evidence
+      Authoritative: true
+  - to: worktree-482
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Isolation evidence
+      Authoritative: true
+  chunkLinks:
+  - matchText: SEC-PII-014
+    to: error-482
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Regression identity evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+  - matchText: network egress disabled
+    to: worktree-482
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Worktree isolation evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+- id: doc-patch
+  path: scenario/generated/documents/patch-rationale-patch-482.pdf
+  title: Patch Rationale PATCH-482
+  documentType: Agent Patch Rationale
+  section: Patch generation
+  paragraphs:
+  - PATCH-482 modifies src/sentinel_core/request_audit.py so exceptional audit metadata is routed through redact_sensitive_fields()
+    before logging.
+  - The rationale is grounded in ERR-PII-482, local source inspection, and Secure Autonomous Code Change Policy v3.6.
+  objectId: document-patch
+  className: DocumentEvidence
+  properties:
+    IssuedAt: '2026-09-12T18:14:22.330Z'
+    Status: Recorded synthetic patch rationale
+  links:
+  - to: patch-482
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Patch evidence
+      Authoritative: true
+  - to: rationale-482
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Rationale evidence
+      Authoritative: true
+  chunkLinks:
+  - matchText: redact_sensitive_fields()
+    to: patch-482
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Patch behavior evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+  - matchText: grounded in ERR-PII-482
+    to: rationale-482
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Rationale provenance evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+- id: doc-policy36
+  path: scenario/generated/documents/secure-autonomous-code-change-policy-v3-6.pdf
+  title: Secure Autonomous Code Change Policy v3.6
+  documentType: Security Governance Policy
+  section: Autonomous execution criteria
+  paragraphs:
+  - Policy v3.6 requires PII redaction, no new network egress, allowed file scope, passing security tests, unchanged cryptographic
+    guard paths, and unchanged dependency lock state.
+  - A PII-processing patch may be committed and deployed autonomously when every required guardrail check passes and deployment
+    remains inside the isolated runtime.
+  objectId: document-policy36
+  className: DocumentEvidence
+  properties:
+    IssuedAt: '2026-09-01T00:00:00Z'
+    Status: Governing at t0
+  links:
+  - to: policy-v36
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Authoritative policy evidence
+      Authoritative: true
+  - to: decision-t0
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Decision control basis
+      Authoritative: true
+  chunkLinks:
+  - matchText: PII redaction
+    to: policy-v36
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: PII control evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+  - matchText: committed and deployed autonomously
+    to: decision-t0
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Autonomous authority evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+- id: doc-guard
+  path: scenario/generated/documents/pre-execution-guardrail-decision-gd-482.pdf
+  title: Pre-Execution Guardrail Decision GD-482-T0
+  documentType: Guardrail Decision Evidence
+  section: Pre-execution checks
+  paragraphs:
+  - GD-482-T0 recorded ALLOW_AUTONOMOUS_COMMIT_AND_DEPLOY after all policy v3.6 pre-execution checks passed.
+  - Execution authorization AUTH-CODE-482 was issued for PATCH-482 and the resulting isolated commit and deployment only.
+  objectId: document-guard
+  className: DocumentEvidence
+  properties:
+    IssuedAt: '2026-09-12T18:14:22.395Z'
+    Status: Historical t0 decision evidence
+  links:
+  - to: decision-t0
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Guardrail decision evidence
+      Authoritative: true
+  - to: auth-482
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Execution authorization evidence
+      Authoritative: true
+  chunkLinks:
+  - matchText: ALLOW_AUTONOMOUS_COMMIT_AND_DEPLOY
+    to: decision-t0
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Disposition evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+  - matchText: AUTH-CODE-482
+    to: auth-482
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Authorization identity evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+- id: doc-commit
+  path: scenario/generated/documents/git-commit-manifest-cmt-482.pdf
+  title: Git Commit Manifest CMT-482
+  documentType: Git Lineage Evidence
+  section: Authorized commit
+  paragraphs:
+  - Commit a61f6df1e70ae4d2196e2d802ec940b660a2482f contains PATCH-482 and was created inside WT-SEC-482.
+  - The Commit Agent consumed AUTH-CODE-482 before its expiry and preserved worktree isolation.
+  objectId: document-commit
+  className: DocumentEvidence
+  properties:
+    IssuedAt: '2026-09-12T18:14:22.450Z'
+    Status: Immutable synthetic commit record
+  links:
+  - to: commit-482
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Commit evidence
+      Authoritative: true
+  - to: worktree-482
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Worktree evidence
+      Authoritative: true
+  chunkLinks:
+  - matchText: a61f6df1e70ae4d2196e2d802ec940b660a2482f
+    to: commit-482
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Commit hash evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+  - matchText: WT-SEC-482
+    to: worktree-482
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Worktree identity evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+- id: doc-deploy
+  path: scenario/generated/documents/deployment-receipt-dep-482.pdf
+  title: Deployment Receipt DEP-482
+  documentType: Deployment Evidence
+  section: Final deployment state
+  paragraphs:
+  - DEP-482 records deployment of commit a61f6df1e70ae4d2196e2d802ec940b660a2482f to the isolated secure runtime.
+  - The final historical deployment state is DEPLOYED_HEALTHY with the local regression suite green and outbound egress disabled.
+  objectId: document-deploy
+  className: DocumentEvidence
+  properties:
+    IssuedAt: '2026-09-12T18:14:22.520Z'
+    Status: Final historical deployment evidence
+  links:
+  - to: deployment-482
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Deployment evidence
+      Authoritative: true
+  - to: component-sentinel
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Target component evidence
+      Authoritative: true
+  chunkLinks:
+  - matchText: DEPLOYED_HEALTHY
+    to: deployment-482
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Deployment state evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+  - matchText: isolated secure runtime
+    to: component-sentinel
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Runtime target evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+- id: doc-policy37
+  path: scenario/generated/documents/policy-revision-v3-7.pdf
+  title: Secure Autonomous Code Change Policy v3.7 - Revision Notice
+  documentType: Policy Revision Evidence
+  section: Later/current authority boundary
+  paragraphs:
+  - Policy v3.7 became effective on 2026-09-15 and requires explicit human security approval for changes touching PII-processing
+    code before deployment.
+  - A current-policy replay of PATCH-482 returns HOLD_FOR_HUMAN_SECURITY_APPROVAL without rewriting the historical v3.6 decision.
+  objectId: document-policy37
+  className: DocumentEvidence
+  properties:
+    IssuedAt: '2026-09-15T00:00:00Z'
+    Status: Current policy revision evidence
+  links:
+  - to: policy-v37
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Current policy evidence
+      Authoritative: true
+  - to: decision-replay
+    connectionClass: documentsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Replay decision evidence
+      Authoritative: true
+  chunkLinks:
+  - matchText: explicit human security approval
+    to: policy-v37
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: New approval requirement evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true
+  - matchText: HOLD_FOR_HUMAN_SECURITY_APPROVAL
+    to: decision-replay
+    connectionClass: chunkSupportsEntity
+    properties:
+      RelationshipEstablishedAt: '2026-09-18T10:00:00Z'
+      EvidenceRole: Replay disposition evidence
+      Confidence: 1.0
+      MatchMethod: YAML phrase seed
+      Authoritative: true

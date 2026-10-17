@@ -1,0 +1,586 @@
+classes:
+- name: RuntimeComponent
+  labelProperty: Name
+  uniqueIDProperties:
+  - ComponentID
+  properties:
+  - name: ComponentID
+    type: String
+  - name: Name
+    type: String
+  - name: ComponentType
+    type: String
+  - name: Purpose
+    type: String
+  - name: Deployment
+    type: String
+  - name: Status
+    type: String
+- name: AutonomousAgent
+  labelProperty: Name
+  uniqueIDProperties:
+  - AgentID
+  properties:
+  - name: AgentID
+    type: String
+  - name: Name
+    type: String
+  - name: Role
+    type: String
+  - name: RuntimeZone
+    type: String
+  - name: Status
+    type: String
+- name: AgentModelVersion
+  labelProperty: Name
+  uniqueIDProperties:
+  - ModelID
+  properties:
+  - name: ModelID
+    type: String
+  - name: Name
+    type: String
+  - name: Version
+    type: String
+  - name: Provider
+    type: String
+  - name: Deployment
+    type: String
+  - name: Status
+    type: String
+- name: AgentRun
+  labelProperty: RunID
+  uniqueIDProperties:
+  - RunID
+  properties:
+  - name: RunID
+    type: String
+  - name: StartedAt
+    type: DateTime
+  - name: CompletedAt
+    type: DateTime
+  - name: Purpose
+    type: String
+  - name: Outcome
+    type: String
+  - name: Status
+    type: String
+- name: SecureWorktree
+  labelProperty: WorktreeID
+  uniqueIDProperties:
+  - WorktreeID
+  properties:
+  - name: WorktreeID
+    type: String
+  - name: Repository
+    type: String
+  - name: Branch
+    type: String
+  - name: BaseCommit
+    type: String
+  - name: IsolationMode
+    type: String
+  - name: NetworkEgress
+    type: String
+  - name: Status
+    type: String
+- name: ErrorEvent
+  labelProperty: ErrorID
+  uniqueIDProperties:
+  - ErrorID
+  properties:
+  - name: ErrorID
+    type: String
+  - name: DetectedAt
+    type: DateTime
+  - name: Source
+    type: String
+  - name: Severity
+    type: String
+  - name: Summary
+    type: String
+  - name: LogDigest
+    type: String
+  - name: Status
+    type: String
+- name: PatchCandidate
+  labelProperty: PatchID
+  uniqueIDProperties:
+  - PatchID
+  properties:
+  - name: PatchID
+    type: String
+  - name: CreatedAt
+    type: DateTime
+  - name: TargetPath
+    type: String
+  - name: DiffDigest
+    type: String
+  - name: ChangeSummary
+    type: String
+  - name: Status
+    type: String
+- name: PatchRationale
+  labelProperty: RationaleID
+  uniqueIDProperties:
+  - RationaleID
+  properties:
+  - name: RationaleID
+    type: String
+  - name: CreatedAt
+    type: DateTime
+  - name: Summary
+    type: String
+  - name: EvidenceBasis
+    type: String
+  - name: Status
+    type: String
+- name: SecurityPolicyVersion
+  labelProperty: Title
+  uniqueIDProperties:
+  - PolicyID
+  properties:
+  - name: PolicyID
+    type: String
+  - name: Title
+    type: String
+  - name: Version
+    type: String
+  - name: EffectiveFrom
+    type: DateTime
+  - name: RequiresPIIRedaction
+    type: Boolean
+  - name: RequiresNoNetworkEgress
+    type: Boolean
+  - name: RequiresAllowedPathScope
+    type: Boolean
+  - name: RequiresTestsPass
+    type: Boolean
+  - name: RequiresCryptoGuardUntouched
+    type: Boolean
+  - name: RequiresDependencyLockUnchanged
+    type: Boolean
+  - name: RequiresHumanApprovalForPIIPaths
+    type: Boolean
+  - name: Status
+    type: String
+- name: GuardrailCheck
+  labelProperty: CheckID
+  uniqueIDProperties:
+  - CheckID
+  properties:
+  - name: CheckID
+    type: String
+  - name: CheckedAt
+    type: DateTime
+  - name: CheckType
+    type: String
+  - name: Result
+    type: String
+  - name: Detail
+    type: String
+  - name: Status
+    type: String
+- name: GuardrailDecision
+  labelProperty: DecisionID
+  uniqueIDProperties:
+  - DecisionID
+  properties:
+  - name: DecisionID
+    type: String
+  - name: DecidedAt
+    type: DateTime
+  - name: Disposition
+    type: String
+  - name: PolicyID
+    type: String
+  - name: DecisionHash
+    type: String
+  - name: Summary
+    type: String
+  - name: Status
+    type: String
+- name: ExecutionAuthorization
+  labelProperty: AuthorizationID
+  uniqueIDProperties:
+  - AuthorizationID
+  properties:
+  - name: AuthorizationID
+    type: String
+  - name: IssuedAt
+    type: DateTime
+  - name: ExpiresAt
+    type: DateTime
+  - name: PolicyID
+    type: String
+  - name: DecisionHash
+    type: String
+  - name: AuthorizedAction
+    type: String
+  - name: Status
+    type: String
+- name: GitCommit
+  labelProperty: CommitID
+  uniqueIDProperties:
+  - CommitID
+  properties:
+  - name: CommitID
+    type: String
+  - name: CreatedAt
+    type: DateTime
+  - name: Repository
+    type: String
+  - name: Branch
+    type: String
+  - name: CommitHash
+    type: String
+  - name: ParentHash
+    type: String
+  - name: Author
+    type: String
+  - name: Status
+    type: String
+- name: DeploymentState
+  labelProperty: DeploymentID
+  uniqueIDProperties:
+  - DeploymentID
+  properties:
+  - name: DeploymentID
+    type: String
+  - name: RecordedAt
+    type: DateTime
+  - name: Environment
+    type: String
+  - name: CommitHash
+    type: String
+  - name: State
+    type: String
+  - name: Summary
+    type: String
+  - name: Status
+    type: String
+- name: DecisionStateSnapshot
+  labelProperty: SnapshotID
+  uniqueIDProperties:
+  - SnapshotID
+  properties:
+  - name: SnapshotID
+    type: String
+  - name: CapturedForTime
+    type: DateTime
+  - name: BoundaryType
+    type: String
+  - name: StateHash
+    type: String
+  - name: Summary
+    type: String
+- name: PolicyRevisionEvent
+  labelProperty: EventID
+  uniqueIDProperties:
+  - EventID
+  properties:
+  - name: EventID
+    type: String
+  - name: OccurredAt
+    type: DateTime
+  - name: ChangeType
+    type: String
+  - name: Summary
+    type: String
+  - name: Status
+    type: String
+- name: DocumentEvidence
+  labelProperty: Title
+  uniqueIDProperties:
+  - DocumentID
+  properties:
+  - name: DocumentID
+    type: String
+  - name: Title
+    type: String
+  - name: DocumentType
+    type: String
+  - name: FilePath
+    type: String
+  - name: AssetKey
+    type: String
+  - name: IssuedAt
+    type: DateTime
+  - name: Status
+    type: String
+connectionClasses:
+- name: componentFeedsComponent
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: FlowRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: agentProducedRun
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: AgentRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: runUsedModel
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: ModelRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: runOperatedInWorktree
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: Purpose
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: runObservedError
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: EvidenceRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: runDiagnosedError
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: DiagnosisRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: runProposedPatch
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: ProposalRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: patchHasRationale
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: RationaleRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: rationaleGroundedInError
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: EvidenceRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: guardRunEvaluatedPatch
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: EvaluationRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: decisionEvaluatesPatch
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: DecisionRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: decisionUnderPolicy
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: ApplicableAtDecision
+    type: Boolean
+  - name: Authoritative
+    type: Boolean
+- name: decisionIncludesCheck
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: Required
+    type: Boolean
+  - name: Authoritative
+    type: Boolean
+- name: checkEvaluatesPatch
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: Scope
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: decisionIssuesAuthorization
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: Authority
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: commitRunUsedAuthorization
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: AuthorityValid
+    type: Boolean
+  - name: Authoritative
+    type: Boolean
+- name: runCreatedCommit
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: Automated
+    type: Boolean
+  - name: Authoritative
+    type: Boolean
+- name: commitContainsPatch
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: DiffDigestVerified
+    type: Boolean
+  - name: Authoritative
+    type: Boolean
+- name: commitInWorktree
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: IsolationPreserved
+    type: Boolean
+  - name: Authoritative
+    type: Boolean
+- name: deployRunUsedAuthorization
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: AuthorityValid
+    type: Boolean
+  - name: Authoritative
+    type: Boolean
+- name: runCreatedDeployment
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: Automated
+    type: Boolean
+  - name: Authoritative
+    type: Boolean
+- name: deploymentUsesCommit
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: CommitHashVerified
+    type: Boolean
+  - name: Authoritative
+    type: Boolean
+- name: deploymentTargetsComponent
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: DeploymentRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: snapshotCapturesState
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: StateRole
+    type: String
+  - name: ApplicableAtSnapshot
+    type: Boolean
+  - name: Authoritative
+    type: Boolean
+  - name: StateSummary
+    type: String
+- name: policySupersedesPolicy
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: SupersededAt
+    type: DateTime
+  - name: Reason
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: revisionIntroducedPolicy
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: EffectiveAt
+    type: DateTime
+  - name: Authoritative
+    type: Boolean
+- name: documentsEntity
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: EvidenceRole
+    type: String
+  - name: Authoritative
+    type: Boolean
+- name: chunkBelongsToDocument
+  connectionMode: classBased
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: SequenceNumber
+    type: Integer
+  - name: PageNumber
+    type: Integer
+  - name: Section
+    type: String
+  - name: ExtractionProvider
+    type: String
+- name: chunkSupportsEntity
+  connectionMode: named
+  properties:
+  - name: RelationshipEstablishedAt
+    type: DateTime
+  - name: EvidenceRole
+    type: String
+  - name: Confidence
+    type: Float
+  - name: MatchMethod
+    type: String
+  - name: Authoritative
+    type: Boolean
