@@ -1,0 +1,85 @@
+plugins {
+    id("co.uzzu.dotenv.gradle") version "4.0.0"
+    id "com.gradleup.shadow" version "8.3.6"
+    id "java"
+}
+
+defaultTasks 'build'
+version = "1.0.0"
+
+// Public repository defaults make a fresh clone buildable without a local .env.
+// Environment/.env values, when present, override these defaults.
+def fvRepoUser = env.isPresent("FV_REPO_UN") ? env.FV_REPO_UN.value : ""
+def fvRepoPassword = env.isPresent("FV_REPO_PW") ? env.FV_REPO_PW.value : ""
+def fvRepoPublic = env.isPresent("FV_REPO_PUB") ? env.FV_REPO_PUB.value : "https://repo.flexvertex.ai/flexvertex"
+def fvRepoThirdParty = env.isPresent("FV_REPO_TP") ? env.FV_REPO_TP.value : "https://repo.flexvertex.ai/thirdparty"
+
+repositories {
+    maven {
+        credentials { username fvRepoUser; password fvRepoPassword }
+        url fvRepoPublic
+    }
+    maven {
+        credentials { username fvRepoUser; password fvRepoPassword }
+        url fvRepoThirdParty
+    }
+    mavenCentral()
+}
+
+sourceSets {
+    main { java { srcDirs = ['src/factory/java'] } }
+}
+
+tasks.withType(JavaExec).configureEach {
+    standardInput = System.in
+    doFirst {
+        if (env.isPresent("FV_FVS_HOST")) environment "FLEX_FVS_HOST", env.FV_FVS_HOST.value
+        if (env.isPresent("FV_FVS_PORT")) environment "FLEX_FVS_PORT", env.FV_FVS_PORT.value
+        if (env.isPresent("FV_FVS_ADMIN_PASSWD")) environment "FLEX_FVS_ADMIN_PASSWORD", env.FV_FVS_ADMIN_PASSWD.value
+    }
+}
+
+def fetchVersionsFromS3() {
+    def props = new Properties()
+    String s3Url = "https://assets.flexvertex.com/configs/ClientVersions.ini"
+    String propertiesContent = new URL(s3Url).text
+    props.load(new StringReader(propertiesContent))
+    return props
+}
+
+def versions = fetchVersionsFromS3()
+def flexVersion = versions.getProperty('flexvertex-multiverse-version-2.1.x')
+println "flexVersion = " + flexVersion
+
+dependencies {
+    implementation "com.flexvertex.multiverse:com.flexvertex.multiverse-client:${flexVersion}"
+    implementation platform("com.flexvertex.platform:com.flexvertex.platform-commons:${flexVersion}")
+    implementation 'com.fasterxml.jackson.core:jackson-core'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
+    implementation 'org.apache.pdfbox:pdfbox:2.0.30'
+    implementation 'com.google.guava:guava'
+    implementation 'io.netty:netty-all'
+    implementation 'commons-io:commons-io'
+    implementation 'args4j:args4j'
+    implementation 'org.apache.logging.log4j:log4j-api'
+    implementation 'org.apache.logging.log4j:log4j-core'
+    implementation 'org.junit.jupiter:junit-jupiter-api'
+}
+
+jar {
+    archiveBaseName.set('FlexVertexYamlEnterpriseFactory')
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    manifest {
+        attributes "Main-Class": "FlexVertexYamlEnterpriseFactory",
+            'Multi-Release': 'true',
+            'Implementation-Version': version
+    }
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest.attributes('Multi-Release': 'true')
+}
+
+task run(type: JavaExec) {
+    classpath = files(tasks.jar)
+    args = project.hasProperty('config') ? [project.property('config')] : ['scenario/autonomous-code-change-decision-lineage.yaml']
+}

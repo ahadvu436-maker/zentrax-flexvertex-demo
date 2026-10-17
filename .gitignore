@@ -1,0 +1,9 @@
+.gradle/
+build/
+.env
+.env.local
+scenario/generated/SCENARIO-NOTES.md
+.idea/
+.vscode/
+*.iml
+.DS_Store
